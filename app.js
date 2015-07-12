@@ -47,8 +47,8 @@ function createContext(context, color, lineWidth) {
 var deg = 0;
 var mouseDown = false;
 
-var elP = getOffsetRect(baseLine);
-var elPos = { x: elP.left, y: elP.top};
+var baselineOffset = getOffsetRect(baseLine);
+var baselinePos = { x: baselineOffset.left, y: baselineOffset.top};
 var stepSize = 1;
 
 
@@ -57,7 +57,8 @@ slider.onmousedown = function(e){mouseDown = true};
 sliderLine.onmouseup = function(e){mouseDown = false};
 sliderLine.onmousemove= function(e) {
     if (mouseDown === true) {
-        var mousePosition = {x: e.clientX-radius-elPos.x, y: e.clientY-radius-elPos.y};
+        var mousePosition = {x: e.clientX-radius-baselinePos.x + parseInt(slider.style.width),
+                            y: e.clientY-radius-baselinePos.y + parseInt(slider.style.height)};
 
         var atan = Math.atan2(mousePosition.x-radius, mousePosition.y-radius);
         deg = -atan/(Math.PI/180) + 180;

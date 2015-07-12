@@ -38,6 +38,6 @@ body {
     top: -15px;
     background: #666;
     border-radius: 100%;
-    cursor: pointer;
+  /*  cursor: pointer;*/
     z-index: 3;
 }
