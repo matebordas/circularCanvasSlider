@@ -16,17 +16,28 @@ body {
     margin:0 auto;
 }
 
-#slider {
+#sliderLine {
+    display: block;
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+}
+
+#baseLine {
+    z-index: 1;
     display: block;
     position: absolute;
     top: 0;
     left: 0;
 }
 
-#baseLine {
-    z-index: -5;
-    display: block;
-    position: absolute;
-    top: 0;
-    left: 0;
+#slider {
+    position: relative;
+    left: 20px;
+    top: -15px;
+    background: #666;
+    border-radius: 100%;
+    cursor: pointer;
+    z-index: 3;
 }
