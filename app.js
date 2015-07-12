@@ -1,8 +1,6 @@
 // SVG stuff
 var range = document.querySelector('#range');
 
-
-
 var sliderLine = document.querySelector('#sliderLine');
 var baseLine = document.querySelector('#baseLine');
 
@@ -53,19 +51,13 @@ var elP = getOffsetRect(baseLine);
 var elPos = { x: elP.left, y: elP.top};
 var stepSize = 1;
 
-/*baseLine.onmousedown = function(e){mouseDown = true};
-baseLine.onmouseup = function(e){mouseDown = false};*/
-//baseLine.onmousemove= function(e) {
+
 sliderLine.onmousedown = function(e){mouseDown = true};
 slider.onmousedown = function(e){mouseDown = true};
 sliderLine.onmouseup = function(e){mouseDown = false};
 sliderLine.onmousemove= function(e) {
     if (mouseDown === true) {
-        //var mousePosition = {x: e.clientX-elPos.x, y: e.clientY-elPos.y};
         var mousePosition = {x: e.clientX-radius-elPos.x, y: e.clientY-radius-elPos.y};
-      /*  if(mousePosition.y < 120 - 75) {
-            return;
-        }*/
 
         var atan = Math.atan2(mousePosition.x-radius, mousePosition.y-radius);
         deg = -atan/(Math.PI/180) + 180;
