@@ -11,8 +11,14 @@ var sliderLineContext = sliderLine.getContext('2d');
 var baseLineCtx = baseLine.getContext("2d");
 
 
-var stepSize = 1;
-var circleRadius = 70;
+var maxValue = Number(sliderLine.dataset.max);
+var minValue = Number(sliderLine.dataset.min);
+
+var stepSize = Number(sliderLine.dataset.step);
+var circleRadius = Number(sliderLine.dataset.radius);
+sliderLine.width  = 240;
+sliderLine.height = 240;
+
 var canvasWidth = 240;
 
 var slider = document.querySelector("#slider");
@@ -32,21 +38,12 @@ var baseLineImageData = baseLineCtx.getImageData(0, 0, 240, 240);
 
 drawCircle(baseLineCtx, baseLineImageData, 1.5*Math.PI);
 
-function createContext(context, color, lineWidth) {
-    context.beginPath();
-    context.strokeStyle = color;
-    context.lineCap = 'square';
-    context.closePath();
-    context.fill();
-    context.lineWidth = lineWidth;
-}
-
 var baselineOffset = getOffsetRect(sliderLine);
 var baselinePos = { x: baselineOffset.left, y: baselineOffset.top};
 
-sliderLine.onmousedown = function(e){mouseDown = true};
 slider.onmousedown = function(e){mouseDown = true};
 
+sliderLine.onmousedown = function(e){mouseDown = true};
 sliderLine.onmouseup = function(e){mouseDown = false};
 
 sliderLine.onmousemove= function(e) {
@@ -85,6 +82,15 @@ sliderLine.onmousemove= function(e) {
     }
 };
 
+function createContext(context, color, lineWidth) {
+    context.beginPath();
+    context.strokeStyle = color;
+    context.lineCap = 'square';
+    context.closePath();
+    context.fill();
+    context.lineWidth = lineWidth;
+}
+
 function setElementPosition(element, x, y) {
     element.style.left = x + "px";
     element.style.top = y + "px";
@@ -107,7 +113,7 @@ function drawCircleLine(current, step) {
     sliderLineContext.arc((canvasWidth/2), (canvasWidth/2), circleRadius, -(quarter), rad, false);
 
     sliderLineContext.lineWidth = 15;
-    sliderLineContext.strokeStyle = 'green';
+    sliderLineContext.strokeStyle = sliderLine.dataset.color;
     sliderLineContext.stroke();
 }
 
