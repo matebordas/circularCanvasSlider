@@ -81,8 +81,8 @@ sliderLine.onmousemove= function(e) {
         drawCircleLine(value, stepSizeDegree);
 
         //rotate slider
-        slider.style.webkitTransform = "rotate(" + currentDegree + "currentDegree)";
-        slider.style.MozTransform = "rotate(" + currentDegree + "currentDegree)";
+        slider.style.webkitTransform = "rotate(" + currentDegree + "deg)";
+        slider.style.MozTransform = "rotate(" + currentDegree + "deg)";
 
         // PRINT VALUES
         document.getElementById('sliderValue1').value = value * stepSize;
