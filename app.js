@@ -10,7 +10,7 @@ var baseLine = document.querySelector('#baseLine');
 var sliderLineContext = sliderLine.getContext('2d');
 var baseLineCtx = baseLine.getContext("2d");
 
-
+//Calculate steps and range
 var maxValue = Number(sliderLine.dataset.max);
 var minValue = Number(sliderLine.dataset.min);
 var range = maxValue - minValue;
@@ -19,16 +19,14 @@ var stepSize = Number(sliderLine.dataset.step);
 var numberOfSteps = range/stepSize;
 var stepSizeDegree = 360/numberOfSteps;
 
-
-var circleRadius = Number(sliderLine.dataset.radius);
-
+//Slider Line style
 //TODO
-sliderLine.width  = 240;
-sliderLine.height = 240;
+var circleRadius = Number(sliderLine.dataset.radius);
+var canvasSize = 240;
+sliderLine.width  = canvasSize;
+sliderLine.height = canvasSize;
 
-var canvasWidth = 240;
-
-
+//Slider position and style
 var slider = document.querySelector("#slider");
 slider.style.width = 20 + 'px';
 slider.style.height = 20 + 'px';
@@ -36,9 +34,10 @@ var sliderW2 = (slider.offsetWidth/2);
 var sliderH2 = (slider.offsetHeight/2);
 var sliderPosX = Math.round((circleRadius)* Math.sin(0));
 var sliderPosY = Math.round((circleRadius)*  -Math.cos(0));
-setElementPosition(slider, sliderPosX+(canvasWidth/2)-sliderW2, sliderPosY+(canvasWidth/2)-sliderH2);
 
-createContext(sliderLineContext, '#99CC33', 11.0);
+setElementPosition(slider, sliderPosX+(canvasSize/2)-sliderW2, sliderPosY+(canvasSize/2)-sliderH2);
+
+createContext(sliderLineContext, sliderLine.dataset.color, 11.0);
 createContext(baseLineCtx, 'red', 10.0);
 
 var sliderLineImageData = sliderLineContext.getImageData(0, 0, 240, 240);
@@ -78,7 +77,7 @@ sliderLine.onmousemove= function(e) {
         sliderPosX = Math.round(circleRadius* Math.sin((value * stepSizeDegree)*Math.PI/180));
         sliderPosY = Math.round(circleRadius*  -Math.cos((value * stepSizeDegree)*Math.PI/180));
 
-        setElementPosition(slider, sliderPosX+(canvasWidth/2)-sliderW2, sliderPosY+(canvasWidth/2)-sliderH2);
+        setElementPosition(slider, sliderPosX+(canvasSize/2)-sliderW2, sliderPosY+(canvasSize/2)-sliderH2);
         drawCircleLine(value, stepSizeDegree);
 
         //rotate slider
@@ -107,7 +106,7 @@ function setElementPosition(element, x, y) {
 function drawCircle(context, imgData, currentValue) {
     context.putImageData(imgData, 0, 0);
     context.beginPath();
-    context.arc((canvasWidth/2), (canvasWidth/2), circleRadius, -(quarter), ((circle) * currentValue) - quarter, false);
+    context.arc((canvasSize/2), (canvasSize/2), circleRadius, -(quarter), ((circle) * currentValue) - quarter, false);
     context.stroke();
 }
 
@@ -117,11 +116,7 @@ function drawCircleLine(current, step) {
 
     var val = (current) * step;
     var rad = degreesToRadians(val);
-
-    sliderLineContext.arc((canvasWidth/2), (canvasWidth/2), circleRadius, -(quarter), rad, false);
-
-    sliderLineContext.lineWidth = 15;
-    sliderLineContext.strokeStyle = sliderLine.dataset.color;
+    sliderLineContext.arc((canvasSize/2), (canvasSize/2), circleRadius, -(quarter), rad, false);
     sliderLineContext.stroke();
 }
 
