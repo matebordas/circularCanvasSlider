@@ -47,15 +47,21 @@ function createContext(context, color, lineWidth) {
 var deg = 0;
 var mouseDown = false;
 
-var baselineOffset = getOffsetRect(baseLine);
+var baselineOffset = getOffsetRect(sliderLine);
 var baselinePos = { x: baselineOffset.left, y: baselineOffset.top};
 var stepSize = 1;
 
 
 sliderLine.onmousedown = function(e){mouseDown = true};
 slider.onmousedown = function(e){mouseDown = true};
+
 sliderLine.onmouseup = function(e){mouseDown = false};
+
 sliderLine.onmousemove= function(e) {
+    sliderLine.onmouseup = function(e){
+        mouseDown = false
+    };
+
     if (mouseDown === true) {
         var mousePosition = {x: e.clientX-radius-baselinePos.x + parseInt(slider.style.width),
                             y: e.clientY-radius-baselinePos.y + parseInt(slider.style.height)};
