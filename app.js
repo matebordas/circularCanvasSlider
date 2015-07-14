@@ -66,6 +66,14 @@ sliderLine.onmousemove= function(e) {
         var mousePosition = {x: e.clientX-radius-baselinePos.x + parseInt(slider.style.width),
                             y: e.clientY-radius-baselinePos.y + parseInt(slider.style.height)};
 
+        if(pointOusideCircle(mousePosition.x, mousePosition.y, radius, radius, radius)) {
+            return;
+        }
+
+        if(pointInsideCircleOffTheLine(mousePosition.x, mousePosition.y, radius, radius, radius)) {
+            return;
+        }
+
         var atan = Math.atan2(mousePosition.x-radius, mousePosition.y-radius);
         deg = -atan/(Math.PI/180) + 180;
         var value = 0 + Math.round(deg/stepSize);
@@ -131,4 +139,16 @@ function getOffsetRect(elem) {
     var left = box.left + scrollLeft - clientLeft;
 
     return { top: top, left: left }
+}
+
+function pointOusideCircle(x, y, cx, cy, radius) {
+    var lineWidth = baseLineCtx.lineWidth; //just to make the scrolling smoother
+    var distancesquared = (x - cx) * (x - cx) + (y - cy) * (y - cy);
+    return distancesquared > (radius + lineWidth)* (radius + lineWidth);
+}
+
+function pointInsideCircleOffTheLine(x, y, cx, cy, radius) {
+    var lineWidth = baseLineCtx.lineWidth; //just to make the scrolling smoother
+    var distancesquared = (x - cx) * (x - cx) + (y - cy) * (y - cy);
+    return distancesquared < (radius - lineWidth) * (radius - lineWidth);
 }
