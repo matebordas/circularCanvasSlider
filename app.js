@@ -1,5 +1,5 @@
-// SVG stuff
-var range = document.querySelector('#range');
+var circle = Math.PI * 2;
+var quarter = Math.PI / 2;
 
 var sliderLine = document.querySelector('#sliderLine');
 var baseLine = document.querySelector('#baseLine');
@@ -7,8 +7,6 @@ var baseLine = document.querySelector('#baseLine');
 var sliderLineContext = sliderLine.getContext('2d');
 var baseLineCtx = baseLine.getContext("2d");
 
-var circ = Math.PI * 2;
-var quart = Math.PI / 2;
 
 
 var radius = 70;
@@ -20,8 +18,7 @@ var sliderW2 = (slider.offsetWidth/2);
 var sliderH2 = (slider.offsetHeight/2);
 var sliderPosX = Math.round((radius)* Math.sin(0));
 var sliderPosY = Math.round((radius)*  -Math.cos(0));
-slider.style.left = (sliderPosX+r-sliderW2) + "px";
-slider.style.top = (sliderPosY+r-sliderH2) + "px";
+setElementPosition(slider, sliderPosX+r-sliderW2, sliderPosY+r-sliderH2);
 
 createContext(sliderLineContext, '#99CC33', 11.0);
 createContext(baseLineCtx, 'red', 10.0);
@@ -29,11 +26,7 @@ createContext(baseLineCtx, 'red', 10.0);
 var sliderLineImageData = sliderLineContext.getImageData(0, 0, 240, 240);
 var baseLineImageData = baseLineCtx.getImageData(0, 0, 240, 240);
 
-draw(baseLineCtx, baseLineImageData, 1.5*Math.PI);
-
-range.onmousemove = function(e) {
-    draw(sliderLineContext, sliderLineImageData, this.value / 100);
-};
+drawCircle(baseLineCtx, baseLineImageData, 1.5*Math.PI);
 
 function createContext(context, color, lineWidth) {
     context.beginPath();
@@ -81,11 +74,11 @@ sliderLine.onmousemove= function(e) {
         sliderPosX = Math.round(radius* Math.sin((value * stepSize)*Math.PI/180));
         sliderPosY = Math.round(radius*  -Math.cos((value * stepSize)*Math.PI/180));
 
-        slider.style.left = (sliderPosX+r-sliderW2) + "px";
-        slider.style.top = (sliderPosY+r-sliderH2) + "px";
+        setElementPosition(slider, sliderPosX+r-sliderW2, sliderPosY+r-sliderH2);
 
-        draw2(value, stepSize);
+        drawCircleLine(value, stepSize);
 
+        //rotate slider
         slider.style.webkitTransform = "rotate(" + deg + "deg)";
         slider.style.MozTransform = "rotate(" + deg + "deg)";
 
@@ -94,21 +87,26 @@ sliderLine.onmousemove= function(e) {
     }
 };
 
-function draw(context, imgData, currentValue) {
+function setElementPosition(element, x, y) {
+    element.style.left = x + "px";
+    element.style.top = y + "px";
+}
+
+function drawCircle(context, imgData, currentValue) {
     context.putImageData(imgData, 0, 0);
     context.beginPath();
-    context.arc(r, r, radius, -(quart), ((circ) * currentValue) - quart, false);
+    context.arc(r, r, radius, -(quarter), ((circle) * currentValue) - quarter, false);
     context.stroke();
 }
 
-function draw2(current, step) {
+function drawCircleLine(current, step) {
     sliderLineContext.putImageData(sliderLineImageData, 0, 0);
     sliderLineContext.beginPath();
 
     var val = (current) * step;
     var rad = degreesToRadians(val);
 
-    sliderLineContext.arc(r, r, radius, -(quart), rad, false);
+    sliderLineContext.arc(r, r, radius, -(quarter), rad, false);
 
     sliderLineContext.lineWidth = 15;
     sliderLineContext.strokeStyle = 'green';
@@ -116,7 +114,7 @@ function draw2(current, step) {
 }
 
 function degreesToRadians (degrees) {
-    return (degrees * Math.PI/180) - quart;
+    return (degrees * Math.PI/180) - quarter;
 }
 
 function getOffsetRect(elem) {
