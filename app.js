@@ -13,13 +13,21 @@ var baseLineCtx = baseLine.getContext("2d");
 
 var maxValue = Number(sliderLine.dataset.max);
 var minValue = Number(sliderLine.dataset.min);
+var range = maxValue - minValue;
 
 var stepSize = Number(sliderLine.dataset.step);
+var numberOfSteps = range/stepSize;
+var stepSizeDegree = 360/numberOfSteps;
+
+
 var circleRadius = Number(sliderLine.dataset.radius);
+
+//TODO
 sliderLine.width  = 240;
 sliderLine.height = 240;
 
 var canvasWidth = 240;
+
 
 var slider = document.querySelector("#slider");
 slider.style.width = 20 + 'px';
@@ -65,20 +73,20 @@ sliderLine.onmousemove= function(e) {
 
         var atan = Math.atan2(mousePosition.x-circleRadius, mousePosition.y-circleRadius);
         currentDegree = -atan/(Math.PI/180) + 180;
-        var value = 0 + Math.round(currentDegree/stepSize);
+        var value = 0 + Math.round(currentDegree/stepSizeDegree);
 
-        sliderPosX = Math.round(circleRadius* Math.sin((value * stepSize)*Math.PI/180));
-        sliderPosY = Math.round(circleRadius*  -Math.cos((value * stepSize)*Math.PI/180));
+        sliderPosX = Math.round(circleRadius* Math.sin((value * stepSizeDegree)*Math.PI/180));
+        sliderPosY = Math.round(circleRadius*  -Math.cos((value * stepSizeDegree)*Math.PI/180));
 
         setElementPosition(slider, sliderPosX+(canvasWidth/2)-sliderW2, sliderPosY+(canvasWidth/2)-sliderH2);
-        drawCircleLine(value, stepSize);
+        drawCircleLine(value, stepSizeDegree);
 
         //rotate slider
         slider.style.webkitTransform = "rotate(" + currentDegree + "currentDegree)";
         slider.style.MozTransform = "rotate(" + currentDegree + "currentDegree)";
 
         // PRINT VALUES
-        //document.getElementById('test').value = value * dataStep;
+        document.getElementById('sliderValue1').value = value * stepSize;
     }
 };
 
