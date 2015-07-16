@@ -13,10 +13,7 @@
 
 //add elements
     var slider = createElementWithId('div', 'slider');
-
     var baseLine = createElementWithId('canvas', 'baseLine');
-    baseLine.width = 240;
-    baseLine.height = 240;
 
     container.appendChild(sliderLine);
     container.appendChild(slider);
@@ -34,10 +31,13 @@
     var numberOfSteps = range / stepSize;
     var stepSizeDegree = 360 / numberOfSteps;
 
-//Slider Line style
+//Cavas lines style
 //TODO
     var circleRadius = Number(sliderLine.dataset.radius);
     var canvasSize = 240;
+    baseLine.width = canvasSize;
+    baseLine.height = canvasSize;
+
     sliderLine.width = canvasSize;
     sliderLine.height = canvasSize;
 
