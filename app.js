@@ -4,8 +4,26 @@ var mouseDown = false;
 var circle = Math.PI * 2;
 var quarter = Math.PI / 2;
 
+//get Elements
 var sliderLine = document.querySelector('#sliderLine');
-var baseLine = document.querySelector('#baseLine');
+
+var containerId = sliderLine.dataset.containerid;
+var container = document.querySelector('#'+containerId);
+container.appendChild(sliderLine);
+
+//add elements
+var slider = document.createElement( 'div' );
+slider.id = "slider";
+container.appendChild(slider);
+
+var baseLine = document.createElement( 'canvas' );
+baseLine.id = "baseLine";
+baseLine.width  = 240;
+baseLine.height = 240;
+container.appendChild(baseLine);
+
+//var baseLine = document.querySelector('#baseLine');
+
 
 var sliderLineContext = sliderLine.getContext('2d');
 var baseLineCtx = baseLine.getContext("2d");
@@ -27,7 +45,7 @@ sliderLine.width  = canvasSize;
 sliderLine.height = canvasSize;
 
 //Slider position and style
-var slider = document.querySelector("#slider");
+//var slider = document.querySelector("#slider");
 slider.style.width = 20 + 'px';
 slider.style.height = 20 + 'px';
 var sliderW2 = (slider.offsetWidth/2);
