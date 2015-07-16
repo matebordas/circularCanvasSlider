@@ -49,25 +49,24 @@ var baselineOffset = getOffsetRect(sliderLine);
 var baselinePos = { x: baselineOffset.left, y: baselineOffset.top};
 
 slider.onmousedown = function(e){mouseDown = true};
+slider.onmouseup = function(e){ mouseDown = false };
 
 sliderLine.onmousedown = function(e){mouseDown = true};
 sliderLine.onmouseup = function(e){mouseDown = false};
 
 sliderLine.onmousemove= function(e) {
-    sliderLine.onmouseup = function(e){
-        mouseDown = false
-    };
+
 
     if (mouseDown === true) {
         var mousePosition = {x: e.clientX-circleRadius-baselinePos.x + parseInt(slider.style.width),
                             y: e.clientY-circleRadius-baselinePos.y + parseInt(slider.style.height)};
 
         if(pointOusideCircle(mousePosition.x, mousePosition.y, circleRadius, circleRadius, circleRadius)) {
-            return;
+            mouseDown = false;
         }
 
         if(pointInsideCircleOffTheLine(mousePosition.x, mousePosition.y, circleRadius, circleRadius, circleRadius)) {
-            return;
+            mouseDown = false;
         }
 
         var atan = Math.atan2(mousePosition.x-circleRadius, mousePosition.y-circleRadius);
