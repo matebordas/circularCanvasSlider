@@ -11,8 +11,8 @@ body {
 
 #container{
     position: relative;
-    width: 240px;
-    height: 240px;
+   /* width: 240px;
+    height: 240px;*/
     margin:0 auto;
 }
 
@@ -34,8 +34,8 @@ body {
 
 #slider {
     position: relative;
-    left: 20px;
-    top: -15px;
+   /* left: 20px;
+    top: -15px;*/
     background: #666;
     border-radius: 100%;
   /*  cursor: pointer;*/
