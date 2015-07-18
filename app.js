@@ -7,13 +7,13 @@
     var quarter = Math.PI / 2;
 
 //get Elements
-    var sliderLine = document.querySelector('#sliderLine');
+    var sliderLine = document.querySelector('.sliderLine');
     var containerId = sliderLine.dataset.containerid;
     var container = document.querySelector('#' + containerId);
 
 //add elements
-    var slider = createElementWithId('div', 'slider');
-    var baseLine = createElementWithId('canvas', 'baseLine');
+    var slider = createElementWithClassName('div', 'slider');
+    var baseLine = createElementWithClassName('canvas', 'baseLine');
 
     container.appendChild(sliderLine);
     container.appendChild(slider);
@@ -84,7 +84,7 @@
 
         if (mouseDown === true) {
             var mousePosition = {x: e.clientX-baselinePos.x, y: e.clientY-baselinePos.y};
-       
+
             if (pointOusideCircle(mousePosition, circleRadius, circleRadius, circleRadius)) {
                 mouseDown = false;
             }
@@ -112,9 +112,9 @@
         }
     };
 
-    function createElementWithId(element, id) {
+    function createElementWithClassName(element, className) {
         var newElement = document.createElement(element);
-        newElement.id = id;
+        newElement.className  = className;
         return newElement;
     }
 

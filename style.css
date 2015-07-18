@@ -10,7 +10,7 @@ body {
     margin:0 auto;
 }
 
-#sliderLine {
+.sliderLine {
     display: block;
     position: absolute;
     top: 0;
@@ -18,7 +18,7 @@ body {
     z-index: 2;
 }
 
-#baseLine {
+.baseLine {
     z-index: 1;
     display: block;
     position: absolute;
@@ -26,7 +26,7 @@ body {
     left: 0;
 }
 
-#slider {
+.slider {
     position: relative;
     background: #666;
     border-radius: 100%;
