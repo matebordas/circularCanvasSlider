@@ -34,7 +34,8 @@
 //Cavas lines style
 //TODO
     var circleRadius = Number(sliderLine.dataset.radius);
-    var canvasSize = (circleRadius * 2) + 100; //+ 100;
+    var additionalSpace = 50;
+    var canvasSize = (circleRadius * 2) + additionalSpace; //+ 100;
     baseLine.width = canvasSize;
     baseLine.height = canvasSize;
 
@@ -62,7 +63,7 @@
 
     drawCircle(baseLineCtx, baseLineImageData, 1.5 * Math.PI);
 
-    var baselineOffset = sliderLine.getBoundingClientRect();//getOffsetRect(sliderLine);
+    var baselineOffset = sliderLine.getBoundingClientRect();
     var baselinePos = {x: baselineOffset.left, y: baselineOffset.top};
 
     slider.onmousedown = function (e) {
@@ -83,19 +84,13 @@
 
         if (mouseDown === true) {
             var mousePosition = {x: e.clientX-baselinePos.x, y: e.clientY-baselinePos.y};
-          /*  var mousePosition = {
-                x: e.clientX - circleRadius - baselinePos.x + parseInt(slider.style.width),
-                y: e.clientY - circleRadius - baselinePos.y + parseInt(slider.style.height)
-            };*/
-
-          //  console.log(e.clientX,baselinePos.x);
-
+       
             if (pointOusideCircle(mousePosition, circleRadius, circleRadius, circleRadius)) {
-              //  mouseDown = false;
+                mouseDown = false;
             }
 
             if (pointInsideCircleOffTheLine(mousePosition, circleRadius, circleRadius, circleRadius)) {
-              //  mouseDown = false;
+                mouseDown = false;
             }
 
             var atan = Math.atan2(mousePosition.x - circleRadius, mousePosition.y - circleRadius);
@@ -145,54 +140,18 @@
     }
 
     function drawCircleLine(current, step) {
-        sliderLineContext.save();
         sliderLineContext.clearRect(0, 0, canvasSize, canvasSize);
-        sliderLineContext.globalAlpha=1;
-
-
         sliderLineContext.putImageData(sliderLineImageData, 0, 0);
         sliderLineContext.beginPath();
 
         var val = (current) * step;
-
-        console.log(val);
-        if(val === 360) {
-
-        }
-
         var rad = degreesToRadians(val);
         sliderLineContext.arc((canvasSize / 2), (canvasSize / 2), circleRadius, -(quarter), rad, false);
         sliderLineContext.stroke();
-
-    /*    sliderLineContext.lineTo(canvasSize/2, canvasSize/2);
-        sliderLineContext.clip();
-        sliderLineContext.restore();*/
     }
 
     function degreesToRadians(degrees) {
         return (degrees * Math.PI / 180) - quarter;
-    }
-
-    function getOffsetRect(elem) {
-        // (1)
-        var box = elem.getBoundingClientRect();
-
-        var body = document.body;
-        var docElem = document.documentElement;
-
-        // (2)
-        var scrollTop = window.pageYOffset || docElem.scrollTop || body.scrollTop;
-        var scrollLeft = window.pageXOffset || docElem.scrollLeft || body.scrollLeft;
-
-        // (3)
-        var clientTop = docElem.clientTop || body.clientTop || 0;
-        var clientLeft = docElem.clientLeft || body.clientLeft || 0;
-
-        // (4)
-        var top = box.top + scrollTop - clientTop;
-        var left = box.left + scrollLeft - clientLeft;
-
-        return {top: top, left: left}
     }
 
     /*
@@ -204,17 +163,15 @@
     function pointOusideCircle(mousePosition, cx, cy, radius) {
         var x = mousePosition.x;
         var y = mousePosition.y;
-        var lineWidth = baseLineCtx.lineWidth; //just to make the scrolling smoother
         var distancesquared = (x - cx) * (x - cx) + (y - cy) * (y - cy);
-        return distancesquared > (radius + lineWidth) * (radius + lineWidth);
+        return distancesquared > (radius + additionalSpace) * (radius + additionalSpace);
     }
 
     function pointInsideCircleOffTheLine(mousePosition, cx, cy, radius) {
         var x = mousePosition.x;
         var y = mousePosition.y;
-        var lineWidth = baseLineCtx.lineWidth; //just to make the scrolling smoother
         var distancesquared = (x - cx) * (x - cx) + (y - cy) * (y - cy);
-        return distancesquared < (radius - lineWidth) * (radius - lineWidth);
+        return distancesquared < (radius - additionalSpace) * (radius - additionalSpace);
     }
 
 })();
