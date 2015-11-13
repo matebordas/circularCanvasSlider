@@ -7,6 +7,7 @@
     var quarter = Math.PI / 2;
 
 //get Elements
+    var valueLabel = document.querySelector('#valueLabel');
     var sliderLine = document.querySelector('.sliderLine');
     var containerId = sliderLine.dataset.containerid;
     var container = document.querySelector('#' + containerId);
@@ -32,10 +33,9 @@
     var stepSizeDegree = 360 / numberOfSteps;
 
 //Cavas lines style
-//TODO
     var circleRadius = Number(sliderLine.dataset.radius);
-    var additionalSpace = 50;
-    var canvasSize = (circleRadius * 2) + additionalSpace; //+ 100;
+    var additionalSpace = 10;
+    var canvasSize = (circleRadius * 2) + additionalSpace;
     baseLine.width = canvasSize;
     baseLine.height = canvasSize;
 
@@ -44,6 +44,9 @@
 
     container.style.width = canvasSize + 'px';
     container.style.height = canvasSize + 'px';
+
+    valueLabel.style.marginTop = canvasSize / 2 + 'px';
+    valueLabel.style.marginLeft = canvasSize / 2 + 'px';
 
 //Slider position and style
     slider.style.width = 20 + 'px';
@@ -58,8 +61,8 @@
     createContext(sliderLineContext, sliderLine.dataset.color, 11.0);
     createContext(baseLineCtx, 'red', 10.0);
 
-    var sliderLineImageData = sliderLineContext.getImageData(0, 0, 240, 240);
-    var baseLineImageData = baseLineCtx.getImageData(0, 0, 240, 240);
+    var sliderLineImageData = sliderLineContext.getImageData(0, 0, canvasSize, canvasSize);
+    var baseLineImageData = baseLineCtx.getImageData(0, 0, canvasSize, canvasSize);
 
     drawCircle(baseLineCtx, baseLineImageData, 1.5 * Math.PI);
 
@@ -108,7 +111,7 @@
             slider.style.MozTransform = "rotate(" + currentDegree + "deg)";
 
             // PRINT VALUES
-            document.getElementById('sliderValue1').value = value * stepSize;
+           valueLabel.innerHTML = value * stepSize;
         }
     };
 
@@ -164,14 +167,14 @@
         var x = mousePosition.x;
         var y = mousePosition.y;
         var distancesquared = (x - cx) * (x - cx) + (y - cy) * (y - cy);
-        return distancesquared > (radius + additionalSpace) * (radius + additionalSpace);
+        return distancesquared > (radius + (additionalSpace * 3)) * (radius + (additionalSpace * 3));
     }
 
     function pointInsideCircleOffTheLine(mousePosition, cx, cy, radius) {
         var x = mousePosition.x;
         var y = mousePosition.y;
         var distancesquared = (x - cx) * (x - cx) + (y - cy) * (y - cy);
-        return distancesquared < (radius - additionalSpace) * (radius - additionalSpace);
+        return distancesquared < (radius - (additionalSpace * 3)) * (radius - (additionalSpace * 3));
     }
 
 })();
